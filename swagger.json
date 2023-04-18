@@ -1,0 +1,733 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Swagger E-commerce - OpenAPI 3.0",
+    "description": "e-commerce Project",
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "Users",
+      "description": "Creating and signing users"
+    },
+    {
+      "name": "Products",
+      "description": "products"
+    },
+    {
+      "name": "Recipes",
+      "description": "Recipes"
+    },
+    {
+      "name": "Blogs",
+      "description": "Blogs"
+    },
+    {
+      "name": "Orders",
+      "description": "Orders"
+    },
+    {
+      "name": "Checkout",
+      "description": "Checkout"
+    }
+  ],
+  "paths": {
+    "/api/register": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "register a new user",
+        "description": "register a new user",
+        "requestBody": {
+          "description": "adding a new user",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Users"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsersResponses"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/login": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "login user",
+        "description": "login user",
+        "requestBody": {
+          "description": "login user",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLogin"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful log-in",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/login"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/recipes": {
+      "get": {
+        "tags": ["Recipes"],
+        "summary": "get all recipes",
+        "responses": {
+          "200": {
+            "description": "Successful return all recipes",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Recipes"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/products": {
+      "get": {
+        "tags": ["Products"],
+        "summary": "get all products",
+        "description": "filter on title,price and category",
+        "required": true,
+        "parameters": [
+          {
+            "name": "title",
+            "in": "query",
+            "description": "name of the product",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "minPrice",
+            "in": "query",
+            "description": "minimum price",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "maxPrice",
+            "in": "query",
+            "description": "max price of the product",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "description": "category of the product",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "list of products",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Products"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/topProducts": {
+      "get": {
+        "tags": ["Products"],
+        "summary": "get top 5 products",
+        "description": "top 5 products",
+        "required": true,
+        "responses": {
+          "200": {
+            "description": "list of products",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Products"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/blogs": {
+      "get": {
+        "tags": ["Blogs"],
+        "summary": "get all blogs",
+        "description": "filter on title",
+        "required": true,
+        "parameters": [
+          {
+            "name": "search",
+            "in": "query",
+            "description": "title of the blog",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "list of blogs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Blogs"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/topBlogs": {
+      "get": {
+        "tags": ["Blogs"],
+        "summary": "get top 3 Blogs",
+        "description": "top 5 Blogs",
+        "required": true,
+        "responses": {
+          "200": {
+            "description": "list of blogs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Blogs"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/orders": {
+      "get": {
+        "tags": ["Orders"],
+        "summary": "get all orders",
+        "description": "get all orders",
+        "required": true,
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page number",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "list of orders",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Orders"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Orders"],
+        "summary": "post a new order",
+        "description": "post a new order",
+        "required": true,
+        "requestBody": {
+          "description": "order data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrderBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "submitting a new order",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/cartItems": {
+      "get": {
+        "tags": ["Checkout"],
+        "summary": "get all items in the cart",
+        "required": true,
+        "responses": {
+          "200": {
+            "description": "items in the cart",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductsArray"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Checkout"],
+        "summary": "add a new item to the cart",
+        "required": true,
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/checklistBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Checkout"],
+        "summary": "update the quantity of an item in the cart",
+        "required": true,
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/checklistPutBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/removeCartItem": {
+      "put": {
+        "tags": ["Checkout"],
+        "summary": "delete an item in the cart",
+        "required": true,
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/checklistRemoveBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Users": {
+        "required": ["name", "email", "password"],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "ali"
+          },
+          "email": {
+            "type": "string",
+            "example": "ali@gmail.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "123"
+          }
+        }
+      },
+      "UserLogin": {
+        "required": ["email", "password"],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "ali@gmail.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "123"
+          }
+        }
+      },
+      "UsersResponses": {
+        "required": ["id", "name", "email"],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "033043242"
+          },
+          "name": {
+            "type": "string",
+            "example": "ali"
+          },
+          "email": {
+            "type": "string",
+            "example": "ali@gmail.com"
+          }
+        }
+      },
+      "login": {
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string"
+          }
+        }
+      },
+      "Recipe": {
+        "required": ["title", "image", "number", "description"],
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "Burger"
+          },
+          "image": {
+            "type": "string",
+            "example": "http://myimage.png"
+          },
+          "number": {
+            "type": "number",
+            "example": "11"
+          },
+          "description": {
+            "type": "string",
+            "example": "Lorem text"
+          }
+        }
+      },
+      "Recipes": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Recipe"
+        }
+      },
+      "Products": {
+        "type": "object",
+        "properties": {
+          "products": {
+            "type": "array",
+            "$ref": "#/components/schemas/ProductsArray"
+          },
+          "count": {
+            "type": "number"
+          }
+        }
+      },
+      "ProductsArray": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Product"
+        }
+      },
+      "Product": {
+        "required": [
+          "_id",
+          "title",
+          "image",
+          "price",
+          "category",
+          "numberOfSales",
+          "checkedUser"
+        ],
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "number",
+            "example": "14534534534340"
+          },
+          "title": {
+            "type": "string",
+            "example": "Bread"
+          },
+          "image": {
+            "type": "string",
+            "example": "http://myImage"
+          },
+          "price": {
+            "type": "number",
+            "example": "10"
+          },
+          "category": {
+            "type": "string",
+            "example": "Bread"
+          },
+          "offer": {
+            "type": "boolean",
+            "example": "true"
+          },
+          "old_price": {
+            "type": "number",
+            "example": "14"
+          },
+          "numberOfSales": {
+            "type": "number",
+            "example": "4"
+          },
+          "checkedUser": {
+            "type": "boolean",
+            "example": false
+          }
+        }
+      },
+      "Blogs": {
+        "type": "object",
+        "properties": {
+          "blogs": {
+            "type": "array",
+            "$ref": "#/components/schemas/BlogsArray"
+          },
+          "count": {
+            "type": "number"
+          }
+        }
+      },
+      "BlogsArray": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Blog"
+        }
+      },
+      "Blog": {
+        "required": ["_id", "title", "image", "description"],
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "number",
+            "example": "14534534534340"
+          },
+          "title": {
+            "type": "string",
+            "example": "new blog"
+          },
+          "image": {
+            "type": "string",
+            "example": "http://myImage"
+          },
+          "description": {
+            "type": "string",
+            "example": "Bread"
+          }
+        }
+      },
+      "Orders": {
+        "type": "object",
+        "properties": {
+          "products": {
+            "type": "array",
+            "$ref": "#/components/schemas/OrdersArray"
+          },
+          "count": {
+            "type": "number"
+          }
+        }
+      },
+      "OrdersArray": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/OrderResponse"
+        }
+      },
+      "OrderBody": {
+        "required": ["date", "numberItems", "totalPrice"],
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "date",
+            "example": "-"
+          },
+          "numberItems": {
+            "type": "number",
+            "example": "10"
+          },
+          "totalPrice": {
+            "type": "number",
+            "example": "30"
+          }
+        }
+      },
+      "OrderResponse": {
+        "required": [
+          "_id",
+          "userId",
+          "orderNumber",
+          "date",
+          "numberItems",
+          "totalPrice"
+        ],
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "2fff"
+          },
+          "userId": {
+            "type": "string",
+            "example": "23441ffe"
+          },
+          "orderNumber": {
+            "type": "string",
+            "example": "14534534534340"
+          },
+          "date": {
+            "type": "date",
+            "example": "-"
+          },
+          "numberItems": {
+            "type": "number",
+            "example": "10"
+          },
+          "totalPrice": {
+            "type": "number",
+            "example": "30"
+          }
+        }
+      },
+      "checklistBody": {
+        "required": ["productId", "name", "price", "quantity"],
+        "type": "object",
+        "properties": {
+          "productId": {
+            "type": "string",
+            "example": "324324d"
+          },
+          "name": {
+            "type": "string",
+            "example": "Fresh Food"
+          },
+          "price": {
+            "type": "number",
+            "example": "30"
+          },
+          "quantity": {
+            "type": "number",
+            "example": "2"
+          }
+        }
+      },
+      "checklistPutBody": {
+        "required": ["productId", "quantity"],
+        "type": "object",
+        "properties": {
+          "productId": {
+            "type": "string",
+            "example": "324324d"
+          },
+          "quantity": {
+            "type": "number",
+            "example": "2"
+          }
+        }
+      },
+      "checklistRemoveBody": {
+        "required": ["productId"],
+        "type": "object",
+        "properties": {
+          "productId": {
+            "type": "string",
+            "example": "324324d"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ]
+}
