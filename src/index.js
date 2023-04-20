@@ -1,5 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv').config();
+const cors = require('cors');
 const connection = require('./config/connection');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('../swagger.json');
@@ -19,6 +20,11 @@ app.listen(Port, () => {
   console.log(`server is running on port ${Port}`);
 });
 
+app.use(
+  cors({
+    origin: 'https://shop-bread.onrender.com',
+  })
+);
 app.use(express.json());
 app.use('/public/images/recipes', express.static('public/images/recipes'));
 app.use('/public/images/products', express.static('public/images/products'));
