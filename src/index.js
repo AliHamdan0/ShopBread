@@ -20,11 +20,7 @@ app.listen(Port, () => {
   console.log(`server is running on port ${Port}`);
 });
 
-app.use(
-  cors({
-    origin: 'https://shop-bread.onrender.com',
-  })
-);
+app.use(cors());
 app.use(express.json());
 app.use('/public/images/recipes', express.static('public/images/recipes'));
 app.use('/public/images/products', express.static('public/images/products'));
