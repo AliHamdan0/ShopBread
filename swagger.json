@@ -40,9 +40,9 @@
         "requestBody": {
           "description": "adding a new user",
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/Users"
+                "$ref": "#/components/schemas/UserRegister"
               }
             }
           },
@@ -54,7 +54,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UsersResponses"
+                  "$ref": "string"
                 }
               }
             }
@@ -85,13 +85,40 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/login"
+                  "type": "object",
+                  "properties": {
+                    "accessToken": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "user": {
+                      "$ref": "#/components/schemas/User"
+                    }
+                  }
                 }
               }
             }
           }
         },
         "security": []
+      }
+    },
+    "/api/user-info": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get user info",
+        "responses": {
+          "200": {
+            "description": "User's Info",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/api/recipes": {
@@ -403,24 +430,6 @@
   },
   "components": {
     "schemas": {
-      "Users": {
-        "required": ["name", "email", "password"],
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "example": "ali"
-          },
-          "email": {
-            "type": "string",
-            "example": "ali@gmail.com"
-          },
-          "password": {
-            "type": "string",
-            "example": "123"
-          }
-        }
-      },
       "UserLogin": {
         "required": ["email", "password"],
         "type": "object",
@@ -435,29 +444,64 @@
           }
         }
       },
-      "UsersResponses": {
-        "required": ["id", "name", "email"],
+      "UserRegister": {
+        "required": ["name", "email", "password"],
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "example": "033043242"
-          },
           "name": {
             "type": "string",
-            "example": "ali"
+            "example": "ali",
+            "required": true
           },
           "email": {
             "type": "string",
-            "example": "ali@gmail.com"
+            "example": "ali@gmail.com",
+            "required": true
+          },
+          "password": {
+            "type": "string",
+            "example": "123"
+          },
+          "occupation": {
+            "type": "string",
+            "example": "Developer"
+          },
+          "hobbies": {
+            "type": "string",
+            "example": "Swimming"
+          },
+          "image": {
+            "type": "string",
+            "example": "http://myImage",
+            "format": "binary"
           }
         }
       },
-      "login": {
+      "User": {
         "type": "object",
         "properties": {
-          "accessToken": {
-            "type": "string"
+          "name": {
+            "type": "string",
+            "example": "ali",
+            "required": true
+          },
+          "email": {
+            "type": "string",
+            "example": "ali@gmail.com",
+            "required": true
+          },
+          "occupation": {
+            "type": "string",
+            "example": "Developer"
+          },
+          "hobbies": {
+            "type": "string",
+            "example": "Swimming"
+          },
+          "image": {
+            "type": "string",
+            "example": "http://myImage",
+            "format": "binary"
           }
         }
       },

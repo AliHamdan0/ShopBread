@@ -25,6 +25,7 @@ app.use(express.json());
 app.use('/public/images/recipes', express.static('public/images/recipes'));
 app.use('/public/images/products', express.static('public/images/products'));
 app.use('/public/images/blogs', express.static('public/images/blogs'));
+app.use('/public/images/upload', express.static('public/images/upload'));
 app.use('/api', userRouter);
 app.use('/api', recipesRouter);
 app.use('/api', productRouter);

@@ -16,6 +16,15 @@ const userSchema = new mongoose.Schema({
   },
   occupation: {
     type: String,
+    default: '',
+  },
+  hobbies: {
+    type: [String],
+    default: [],
+  },
+  image: {
+    type: String,
+    default: '',
   },
 });
 
