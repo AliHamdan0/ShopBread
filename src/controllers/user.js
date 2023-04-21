@@ -25,7 +25,7 @@ const registerUser = asyncHandler(async (req, res) => {
     password: hashedPassword,
     hobbies,
     occupation,
-    image: `${backend}/${req.file.path}`,
+    image: req?.file ? `${backend}/${req?.file?.path}` : '',
   });
   if (newUser) {
     res.status(200);
