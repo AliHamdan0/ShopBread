@@ -18,11 +18,12 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new Error('user already exists');
   }
   const hashedPassword = await bcrypt.hash(password, 10);
+  const backend = process.env.BACKEND_ENDPOINT;
   const newUser = await Users.create({
     name,
     email,
     password: hashedPassword,
-    image: `https://shop-bread.onrender.com/api/${req.file.path}`,
+    image: `${backend}/${req.file.path}`,
   });
   if (newUser) {
     res.status(200);

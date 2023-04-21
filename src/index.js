@@ -14,7 +14,7 @@ const checkoutRouter = require('./routes/checkout');
 
 const app = express();
 const Port = process.env.PORT || 7000;
-
+const backend = process.env.BACKEND_ENDPOINT;
 connection();
 app.listen(Port, () => {
   console.log(`server is running on port ${Port}`);
@@ -22,10 +22,22 @@ app.listen(Port, () => {
 
 app.use(cors());
 app.use(express.json());
-app.use('/public/images/recipes', express.static('public/images/recipes'));
-app.use('/public/images/products', express.static('public/images/products'));
-app.use('/public/images/blogs', express.static('public/images/blogs'));
-app.use('/public/images/upload', express.static('public/images/upload'));
+app.use(
+  `${backend}/public/images/recipes`,
+  express.static(`${backend}/public/images/recipes`)
+);
+app.use(
+  `${backend}/public/images/products`,
+  express.static(`${backend}/public/images/recipes`)
+);
+app.use(
+  `${backend}/public/images/blogs`,
+  express.static(`${backend}/public/images/recipes`)
+);
+app.use(
+  `${backend}/public/images/upload`,
+  express.static(`${backend}/public/images/recipes`)
+);
 app.use('/api', userRouter);
 app.use('/api', recipesRouter);
 app.use('/api', productRouter);
