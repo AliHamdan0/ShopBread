@@ -9,7 +9,7 @@ const { ObjectId } = require('mongodb');
 const getCartItems = asyncHandler(async (req, res) => {
   const userId = req.user._id;
 
-  const cart = await Checkouts.find({ userId }).populate('items');
+  const cart = await Checkouts.findOne({ userId }).populate('items');
   if (!cart) {
     res.status(200).json({ cart: [] });
   }
