@@ -6,17 +6,8 @@ const CheckoutSchema = new mongoose.Schema({
     required: true,
     ref: 'Users',
   },
-  items: {
-    type: [
-      {
-        productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Products' },
-        name: { type: String },
-        price: { type: Number },
-        quantity: { type: Number },
-      },
-    ],
-    required: true,
-  },
+  items: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Products' }],
+  quantities: { type: [{ productId: String, quantity: Number }] },
 });
 
 module.exports = mongoose.model('Checkout', CheckoutSchema);

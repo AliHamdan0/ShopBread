@@ -15,7 +15,7 @@ const getAllProducts = asyncHandler(async (req, res) => {
     .limit(size)
     .lean();
   const count = await Products.find(filters).count();
-  CheckedForUser(products, userId);
+  // CheckedForUser(products, userId);
   res.status(200).json({ products, count });
 });
 

@@ -8,11 +8,12 @@ const { ObjectId } = require('mongodb');
 // private
 const getCartItems = asyncHandler(async (req, res) => {
   const userId = req.user._id;
-  const cart = await Checkouts.find({ userId }, { items: 1 }).lean();
+
+  const cart = await Checkouts.find({ userId }).populate('items');
   if (!cart) {
     res.status(200).json({ cart: [] });
   }
-  res.status(200).json({ cart: cart });
+  res.status(200).json({ cart });
 });
 
 // post a new item to cart list
@@ -20,17 +21,18 @@ const getCartItems = asyncHandler(async (req, res) => {
 // private
 const postCartItem = asyncHandler(async (req, res) => {
   const userId = req.user._id;
-  const { productId } = req.body;
-  let usersItems = await Checkouts.findOne({ userId });
-  if (!usersItems) {
+  const { productId, quantity } = req.body;
+  let user = await Checkouts.findOne({ userId });
+  if (!user) {
     ///create a record for this user
-    usersItems = await Checkouts.create({
+    let userItems = await Checkouts.create({
       userId,
-      items: [{ ...req.body }],
+      items: [productId],
+      quantities: [{ productId, quantity }],
     });
-    if (usersItems) {
+    if (userItems) {
       res.status(201).json({ msg: 'added successfully' });
-      addUserToCheckedUsers(productId, userId);
+      // addUserToCheckedUsers(productId, userId);
     } else {
       res.status(500);
       throw new Error('could not register a new item');
@@ -39,27 +41,33 @@ const postCartItem = asyncHandler(async (req, res) => {
     let newChecklist;
     const isItemExist = await Checkouts.findOne({
       userId,
-      items: { $elemMatch: { productId: new ObjectId(productId) } },
+      items: new ObjectId(productId),
+      // items: { $elemMatch: { productId: new ObjectId(productId) } },
     });
     if (isItemExist) {
       newChecklist = await Checkouts.findOneAndUpdate(
         {
           userId,
         },
-        { $inc: { 'items.$[item].quantity': req.body.quantity } },
-        { arrayFilters: [{ 'item.productId': new ObjectId(productId) }] }
+        { $inc: { 'quantities.$[item].quantity': req.body.quantity } },
+        { arrayFilters: [{ 'item.productId': productId }] }
       );
     } else {
       newChecklist = await Checkouts.findOneAndUpdate(
         {
           userId,
         },
-        { $push: { items: { ...req.body } } }
+        {
+          $push: {
+            items: productId,
+            quantities: { productId, quantity },
+          },
+        }
       );
     }
     if (newChecklist) {
       res.status(200).json({ msg: 'added successfully' });
-      if (!isItemExist) addUserToCheckedUsers(productId, userId);
+      // if (!isItemExist) addUserToCheckedUsers(productId, userId);
     } else {
       res.status(500);
       throw new Error('could not register a new item');
@@ -77,8 +85,8 @@ const putCartItem = asyncHandler(async (req, res) => {
     {
       userId,
     },
-    { $set: { 'items.$[item].quantity': quantity } },
-    { arrayFilters: [{ 'item.productId': new ObjectId(productId) }] }
+    { $set: { 'quantities.$[item].quantity': quantity } },
+    { arrayFilters: [{ 'item.productId': productId }] }
   );
   if (newChecklist) res.status(200).json({ msg: 'updated successfully' });
   else {
@@ -97,11 +105,11 @@ const deleteCartItem = asyncHandler(async (req, res) => {
     {
       userId,
     },
-    { $pull: { items: { productId: new ObjectId(productId) } } }
+    { $pull: { items: new ObjectId(productId), quantities: { productId } } }
   );
   if (newChecklist) {
     res.status(200).json({ msg: 'removed successfully' });
-    removeUserToCheckedUsers(productId, userId);
+    // removeUserToCheckedUsers(productId, userId);
   } else {
     res.status(500);
     throw new Error('could not update the item');

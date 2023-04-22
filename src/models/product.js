@@ -27,9 +27,9 @@ const productSchema = new mongoose.Schema({
   numberOfSales: {
     type: Number,
   },
-  checkedUser: {
-    type: [],
-  },
+  // checkedUser: {
+  //   type: [],
+  // },
 });
 
 module.exports = mongoose.model('Products', productSchema);

@@ -558,8 +558,7 @@
           "image",
           "price",
           "category",
-          "numberOfSales",
-          "checkedUser"
+          "numberOfSales"
         ],
         "type": "object",
         "properties": {
@@ -594,10 +593,6 @@
           "numberOfSales": {
             "type": "number",
             "example": "4"
-          },
-          "checkedUser": {
-            "type": "boolean",
-            "example": false
           }
         }
       },
@@ -782,6 +777,10 @@
           "quantity": {
             "type": "string",
             "example": "2"
+          },
+          "image": {
+            "type": "string",
+            "example": "http://myimage.png"
           }
         }
       },
