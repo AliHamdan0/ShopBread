@@ -3,7 +3,7 @@ const { getAllBlogs, getTopBlogs } = require('../controllers/blogs');
 const validateToken = require('../middlewares/validateTokenHandler');
 
 const blogRouter = Router();
-blogRouter.use(validateToken);
+// blogRouter.use(validateToken);
 
 blogRouter.get('/blogs', getAllBlogs);
 blogRouter.get('/topBlogs', getTopBlogs);

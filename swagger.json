@@ -339,7 +339,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ProductsArray"
+                  "$ref": "#/components/schemas/checklistItemsArray"
                 }
               }
             }
@@ -758,6 +758,37 @@
             "type": "string",
             "example": "324324d"
           }
+        }
+      },
+      "checklistItem": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "324324d"
+          },
+          "productId": {
+            "type": "string",
+            "example": "12ed"
+          },
+          "name": {
+            "type": "string",
+            "example": "Fresh Food"
+          },
+          "price": {
+            "type": "string",
+            "example": "10"
+          },
+          "quantity": {
+            "type": "string",
+            "example": "2"
+          }
+        }
+      },
+      "checklistItemsArray": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/checklistItem"
         }
       }
     },

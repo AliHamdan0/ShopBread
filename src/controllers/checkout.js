@@ -8,11 +8,11 @@ const { ObjectId } = require('mongodb');
 // private
 const getCartItems = asyncHandler(async (req, res) => {
   const userId = req.user._id;
-  const cart = await Checkouts.find({ userId });
+  const cart = await Checkouts.find({ userId }, { items: 1 }).lean();
   if (!cart) {
-    res.status(200).json({ userId, items: [] });
+    res.status(200).json({ cart: [] });
   }
-  res.status(200).json({ cart });
+  res.status(200).json({ cart: cart });
 });
 
 // post a new item to cart list
@@ -29,7 +29,7 @@ const postCartItem = asyncHandler(async (req, res) => {
       items: [{ ...req.body }],
     });
     if (usersItems) {
-      res.status(200).json({ msg: 'added successfully' });
+      res.status(201).json({ msg: 'added successfully' });
       addUserToCheckedUsers(productId, userId);
     } else {
       res.status(500);

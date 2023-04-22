@@ -3,7 +3,7 @@ const { getAllRecipes } = require('../controllers/recipes');
 const validateToken = require('../middlewares/validateTokenHandler');
 
 const recipesRouter = Router();
-recipesRouter.use(validateToken);
+// recipesRouter.use(validateToken);
 
 recipesRouter.get('/recipes', getAllRecipes);
 
