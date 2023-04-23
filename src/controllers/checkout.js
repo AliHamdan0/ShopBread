@@ -12,8 +12,7 @@ const getCartItems = asyncHandler(async (req, res) => {
   const cart = await Checkouts.findOne({ userId }).populate('items');
   if (!cart) {
     res.status(200).json({ cart: [] });
-  }
-  res.status(200).json({ cart });
+  } else res.status(200).json({ cart });
 });
 
 // post a new item to cart list

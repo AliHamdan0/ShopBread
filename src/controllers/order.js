@@ -1,5 +1,6 @@
 const Orders = require('../models/order');
 const Products = require('../models/product');
+const checkout = require('../models/checkout');
 const asyncHandler = require('express-async-handler');
 
 // get all orders
@@ -43,6 +44,7 @@ const postOrder = asyncHandler(async (req, res) => {
   if (newOrders) {
     res.status(200).json({ newOrders });
     addProductNumber(items);
+    const clearCart = await checkout.findOneAndDelete({ userId });
   } else {
     res.status(500);
     throw new Error('could not register a new order');
