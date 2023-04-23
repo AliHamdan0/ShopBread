@@ -48,7 +48,7 @@ const postCartItem = asyncHandler(async (req, res) => {
         {
           userId,
         },
-        { $inc: { 'quantities.$[item].quantity': req.body.quantity } },
+        { $set: { 'quantities.$[item].quantity': req.body.quantity } },
         { arrayFilters: [{ 'item.productId': productId }] }
       );
     } else {
