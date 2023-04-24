@@ -1,7 +1,7 @@
 const productFilter = (req, res, next) => {
   const filters = {};
   const { name, minPrice = 1, maxPrice = 100, date, category } = req.query;
-  if (name & (name != undefined)) {
+  if (name != undefined && name != null && name != '') {
     filters.name = { $regex: name?.toLowerCase() };
   }
 
@@ -10,7 +10,7 @@ const productFilter = (req, res, next) => {
 
   if (date) filters.date = { $gte: new Date(date) };
 
-  if (category & (category != undefined))
+  if (category != undefined && category != null && category != '')
     filters.category = category?.toLowerCase();
   req.filters = filters;
   next();
