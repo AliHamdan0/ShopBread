@@ -8,7 +8,7 @@ const asyncHandler = require('express-async-handler');
 const getAllBlogs = asyncHandler(async (req, res) => {
   const { search } = req.query;
   const page = parseInt(req.query.page) - 1 || 0;
-  let size = 3;
+  let size = 6;
   let blogs;
   let count;
   if (search != '' && search != null) {

@@ -9,7 +9,7 @@ const getAllProducts = asyncHandler(async (req, res) => {
   const { filters } = req;
   // const userId = req.user._id;
   const page = parseInt(req.query.page) - 1 || 0;
-  let size = 5;
+  let size = 6;
   let products = await Products.find(filters)
     .skip(page * size)
     .limit(size)
