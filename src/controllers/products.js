@@ -7,7 +7,7 @@ const asyncHandler = require('express-async-handler');
 // private
 const getAllProducts = asyncHandler(async (req, res) => {
   const { filters } = req;
-  const userId = req.user._id;
+  // const userId = req.user._id;
   const page = parseInt(req.query.page) - 1 || 0;
   let size = 5;
   let products = await Products.find(filters)
