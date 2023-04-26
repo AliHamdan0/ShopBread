@@ -18,14 +18,14 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new Error('user already exists');
   }
   const hashedPassword = await bcrypt.hash(password, 10);
-  const backend = process.env.BACKEND_ENDPOINT;
+  // const backend = process.env.BACKEND_ENDPOINT;
   const newUser = await Users.create({
     name,
     email,
     password: hashedPassword,
     hobbies,
     occupation,
-    image: req?.file ? `${backend}/${req?.file?.path}` : '',
+    // image: req?.file ? `${backend}/${req?.file?.path}` : '',
   });
   if (newUser) {
     res.status(200);
