@@ -1,11 +1,11 @@
 const productFilter = (req, res, next) => {
   const filters = {};
   const { name, minPrice = 1, maxPrice = 100, date, category } = req.query;
+
   if (name != undefined && name != null && name != '') {
     filters.name = { $regex: name?.toLowerCase() };
   }
-
-  if (minPrice > 1 && maxPrice < 100)
+  if (parseInt(minPrice) >= 1 && parseInt(maxPrice) <= 100)
     filters.price = { $gte: parseInt(minPrice), $lte: parseInt(maxPrice) };
 
   if (date) filters.date = { $gte: new Date(date) };
